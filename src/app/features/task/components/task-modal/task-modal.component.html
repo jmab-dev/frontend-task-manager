@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ task ? 'Editar Tarea' : 'Agregar Tarea' }}</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+  <form>
+    <div class="mb-3">
+      <label for="title" class="form-label">Título</label>
+      <input type="text" class="form-control" [(ngModel)]="newTask.title" name="title" [ngClass]="{'is-invalid': errorMessage}" required [readonly]="isEditing()">
+      <div *ngIf="errorMessage" class="invalid-feedback">
+        {{ errorMessage }}
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Descripción</label>
+      <textarea class="form-control" [(ngModel)]="newTask.description" name="description" required [readonly]="isEditing()"></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="status" class="form-label">Estado</label>
+      <select class="form-select" [(ngModel)]="newTask.status" name="status" required>
+        <option *ngFor="let status of status" [value]="status.id">
+          {{ status.description }}
+        </option>
+      </select>
+    </div>
+  </form>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close()">Cerrar</button>
+    <button type="button" class="btn btn-primary" (click)="saveTask()">Guardar</button>
+  </div>
+</div>

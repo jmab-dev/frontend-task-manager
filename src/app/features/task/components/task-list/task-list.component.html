@@ -1,0 +1,56 @@
+<div class="container mt-4">
+    <h2 class="text-center">Gestión de Tareas</h2>
+
+    <div class="row mb-3">
+        <div class="col-auto ms-auto">
+            <button type="button" class="btn btn-dark" (click)="logout()">Logout</button>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="statusFilter" class="form-label me-3 col-auto">Filtros:</label>
+        <div class="col-auto">
+            <input [(ngModel)]="searchText" (ngModelChange)="onFilterTextChange()" class="form-control me-2"
+                placeholder="Buscar tarea..." />
+        </div>
+        <div class="col-auto d-flex align-items-center">
+            <select id="statusFilter" class="form-select" [(ngModel)]="selectedStatus"
+                (ngModelChange)="onFilterTextChange()">
+                <option value="0">Todos</option>
+                <option *ngFor="let status of status" [value]="status.id">
+                    {{ status.description }}
+                </option>
+            </select>
+        </div>
+        <div class="col-auto ms-auto">
+            <button class="btn btn-primary" (click)="openAddTaskModal()">Agregar Tarea</button>
+        </div>
+    </div>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let task of filteredTasks">
+                <td>{{ task.title }}</td>
+                <td>{{ task.description }}</td>
+                <td>{{ getStatusName(task.status) }}</td>
+                <td>
+                    <button class="btn btn-sm btn-warning me-2" (click)="openEditTaskModal(task)">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger" (click)="deleteTask(task.id)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
